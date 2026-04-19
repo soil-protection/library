@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcadia Library Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="ambient ambient-left"></div>
+    <div class="ambient ambient-right"></div>
+
+    <header class="hero reveal" id="top">
+      <nav class="topbar">
+        <a class="brand" href="#top" aria-label="Arcadia Library Hub home">
+          <span class="brand-mark">AL</span>
+          <span>
+            <strong>Arcadia Library Hub</strong>
+            <small>Student + Librarian Workspace</small>
+          </span>
+        </a>
+
+        <div class="topbar-links">
+          <a href="#student-zone">Student Portal</a>
+          <a href="#admin-zone">Librarian Desk</a>
+          <a href="#ledger-zone">Borrow Ledger</a>
+        </div>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Interactive Library Management System</p>
+          <h1>A library-themed dashboard built for students, librarians, and daily circulation tracking.</h1>
+          <p class="hero-text">
+            Browse the collection, monitor who has borrowed each book, and let the librarian record
+            borrow dates, due dates, and return dates from one animated control desk.
+          </p>
+
+          <div class="hero-actions">
+            <a class="primary-btn" href="#admin-zone">Open Librarian Desk</a>
+            <a class="ghost-btn" href="#student-zone">Explore Student View</a>
+          </div>
+
+          <div class="hero-summary">
+            <article class="summary-card">
+              <span class="summary-label">Live Loans</span>
+              <strong class="summary-value" id="hero-live-loans">0</strong>
+              <small>Borrowed right now</small>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Returns Logged</span>
+              <strong class="summary-value" id="hero-returns">0</strong>
+              <small>Completed circulation</small>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Overdue Watch</span>
+              <strong class="summary-value" id="hero-overdue">0</strong>
+              <small>Books needing attention</small>
+            </article>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="glow-orb"></div>
+
+          <article class="floating-panel ledger-panel">
+            <span class="mini-label">Today on Desk</span>
+            <h2>Borrow. Return. Repeat.</h2>
+            <ul class="mini-list">
+              <li>Track book title and borrower</li>
+              <li>Capture issue, due, and return dates</li>
+              <li>Reflect updates instantly in the student view</li>
+            </ul>
+          </article>
+
+          <article class="floating-panel shelf-panel">
+            <span class="mini-label">Shelf Pulse</span>
+            <div class="shelf-bars">
+              <span style="--bar-height: 72%"></span>
+              <span style="--bar-height: 44%"></span>
+              <span style="--bar-height: 88%"></span>
+              <span style="--bar-height: 56%"></span>
+              <span style="--bar-height: 68%"></span>
+            </div>
+            <p>Animated category activity from the collection</p>
+          </article>
+
+          <div class="book-stack">
+            <span class="book-spine spine-1">Records</span>
+            <span class="book-spine spine-2">Returns</span>
+            <span class="book-spine spine-3">Catalog</span>
+            <span class="book-spine spine-4">Circulation</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="stats-band reveal">
+        <article class="stat-card">
+          <span class="stat-label">Collection Size</span>
+          <strong class="stat-value" id="total-books">0</strong>
+          <p>Titles visible to students in the catalog.</p>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Books On Loan</span>
+          <strong class="stat-value" id="active-loans">0</strong>
+          <p>Includes active and overdue borrow records.</p>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Returned Entries</span>
+          <strong class="stat-value" id="returned-books">0</strong>
+          <p>Transactions already closed by the librarian.</p>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Due Soon</span>
+          <strong class="stat-value" id="due-soon">0</strong>
+          <p>Borrows needing attention within the next week.</p>
+        </article>
+      </section>
+
+      <section class="section reveal" id="student-zone">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Student Portal</p>
+            <h2>Search the shelves and understand circulation at a glance.</h2>
+          </div>
+          <p class="section-copy">
+            Students can browse featured titles, see what is available, and review active borrowing
+            activity without digging through a complicated system.
+          </p>
+        </div>
+
+        <div class="student-layout">
+          <div class="panel catalog-panel">
+            <div class="panel-top">
+              <div>
+                <h3>Library Catalog</h3>
+                <p>Live availability changes based on the borrow ledger.</p>
+              </div>
+              <label class="search-field" for="catalog-search">
+                <span>Find a title or author</span>
+                <input id="catalog-search" type="search" placeholder="Search books, authors, categories...">
+              </label>
+            </div>
+
+            <div class="chip-row" id="category-chips" aria-label="Book categories"></div>
+            <div class="catalog-grid" id="catalog-grid"></div>
+          </div>
+
+          <div class="student-sidebar">
+            <article class="panel spotlight-panel">
+              <div class="panel-top compact">
+                <div>
+                  <h3>Current Borrowers</h3>
+                  <p>Who currently has a book checked out.</p>
+                </div>
+              </div>
+              <div class="loan-list" id="active-loan-list"></div>
+            </article>
+
+            <article class="panel reminder-panel">
+              <div class="panel-top compact">
+                <div>
+                  <h3>Return Reminders</h3>
+                  <p>Nearest due and overdue alerts.</p>
+                </div>
+              </div>
+              <div class="reminder-list" id="reminder-list"></div>
+            </article>
+
+            <article class="panel activity-panel">
+              <div class="panel-top compact">
+                <div>
+                  <h3>Recent Library Activity</h3>
+                  <p>Latest borrow and return movement.</p>
+                </div>
+              </div>
+              <div class="activity-feed" id="activity-feed"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="admin-zone">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Librarian / Admin Desk</p>
+            <h2>Record borrow and return details from a single circulation form.</h2>
+          </div>
+          <p class="section-copy">
+            Add fresh entries for students, capture when a book was taken, when it should come back,
+            and when it was actually returned. The dashboard updates instantly.
+          </p>
+        </div>
+
+        <div class="admin-layout">
+          <form class="panel form-panel" id="entry-form">
+            <div class="panel-top">
+              <div>
+                <h3>New Library Entry</h3>
+                <p>Use this to log a new borrow or a completed return transaction.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                <span>Book Name</span>
+                <input name="bookTitle" type="text" list="book-list" placeholder="Enter book title" required>
+              </label>
+
+              <label>
+                <span>Category</span>
+                <input name="category" type="text" placeholder="Fiction, Science, History..." required>
+              </label>
+
+              <label>
+                <span>Student Name</span>
+                <input name="studentName" type="text" placeholder="Borrower name" required>
+              </label>
+
+              <label>
+                <span>Student ID</span>
+                <input name="studentId" type="text" placeholder="Roll no / ID">
+              </label>
+
+              <label>
+                <span>Borrowed On</span>
+                <input name="borrowDate" type="date" required>
+              </label>
+
+              <label>
+                <span>Due Back</span>
+                <input name="dueDate" type="date" required>
+              </label>
+
+              <label>
+                <span>Returned On</span>
+                <input name="returnDate" type="date">
+              </label>
+
+              <label class="wide">
+                <span>Notes</span>
+                <textarea name="notes" rows="4" placeholder="Optional note for condition, subject, or remarks"></textarea>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">Add Entry</button>
+              <button class="ghost-btn" type="button" id="restore-demo">Restore Demo Data</button>
+            </div>
+
+            <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+          </form>
+
+          <aside class="panel insights-panel">
+            <div class="panel-top">
+              <div>
+                <h3>Desk Insights</h3>
+                <p>Auto-generated summaries from the current ledger.</p>
+              </div>
+            </div>
+
+            <div class="insight-list" id="insight-list"></div>
+
+            <div class="mini-calendar">
+              <span class="mini-label">Borrow Rhythm</span>
+              <div class="calendar-wave">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <p>Animated desk activity indicator.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section reveal" id="ledger-zone">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Borrow Ledger</p>
+            <h2>Monitor the full list of borrowed, returned, and overdue books.</h2>
+          </div>
+          <p class="section-copy">
+            Use the quick filters below to focus on active records. Librarians can also mark an active
+            book as returned with one click.
+          </p>
+        </div>
+
+        <div class="panel ledger-panel-main">
+          <div class="ledger-toolbar">
+            <div class="filter-tabs" id="status-filters">
+              <button class="filter-btn active" data-filter="all" type="button">All</button>
+              <button class="filter-btn" data-filter="borrowed" type="button">Borrowed</button>
+              <button class="filter-btn" data-filter="returned" type="button">Returned</button>
+              <button class="filter-btn" data-filter="overdue" type="button">Overdue</button>
+            </div>
+
+            <label class="search-field ledger-search" for="ledger-search">
+              <span>Search records</span>
+              <input id="ledger-search" type="search" placeholder="Search by book or student">
+            </label>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Book Name</th>
+                  <th>Student</th>
+                  <th>Taken</th>
+                  <th>Due</th>
+                  <th>Returned</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="ledger-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer reveal">
+      <p>Arcadia Library Hub is a single-page library interface for students and librarians.</p>
+      <p>Borrow records are saved in your browser so the demo stays interactive after refresh.</p>
+    </footer>
+  </div>
+
+  <datalist id="book-list"></datalist>
+
+  <script src="script.js"></script>
+</body>
+</html>
